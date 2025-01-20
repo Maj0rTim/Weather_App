@@ -1,0 +1,99 @@
+﻿@model Weather_App.Models.Forecast
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div style="height: 5em"></div>
+
+<div class="container-fluid">
+    <div class="row align-content-center justify-content-evenly">
+        <div class="col border-end">
+            <div class="row">
+                <div class="col justify-content-center align-content-center text-center">
+                    <p class="name">Temperature</p>
+                    <p id="Temp">Temp</p>
+                </div>
+                <div class="col justify-content-center align-content-center">
+                    <img id="Image-temp" class="icon" src="" />
+                </div>
+            </div>
+        </div>
+        <div class="col border-start border-end">
+            <div class="row">
+                <div class="col justify-content-center align-content-center text-center">
+                    <p class="name">@Model.Name - @Model.Type</p>
+                    <p id="Date">Date</p>
+                    <p id="Time">Time</p>
+                </div>
+                <div class="col justify-content-center align-content-center">
+                    <img id="Image-type" class="icon" src="" />
+                </div>
+            </div>
+        </div>  
+        <div class="col border-start">
+            <div class="row">
+                <div class="col justify-content-center align-content-center text-center">
+                    <p class="name">Wind Speed</p>
+                    <p id="Speed" value="Speed"></p>
+                </div>
+                <div class="col justify-content-center align-content-center">
+                    <img class="icon" src="/assets/wind.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+
+</div>
+
+<style>
+    .icon {
+        width: 10em;
+        height: auto;
+    }
+</style>
+
+<script>
+
+    $("document").ready(function () {
+
+        const dateString = new Date(String(@Model.Year), String(@Model.Month-1), String(@Model.Day));
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
+        const date = new Date(formattedDate);
+
+        $("#Date").text(date.toDateString());
+        $("#Speed").text(@Model.Speed + ' m/s');
+        $("#Temp").text(@Model.Temp + ' °C');
+        $("#Image-type").attr('src', getType(@Model.Hour, "@Model.Type"));
+        $("#Image-temp").attr('src', getTemp(@Model.Temp));
+
+    });
+
+    function getTemp(temp) {
+        if (temp > 14) {
+            return "/assets/hot.png"
+        } else {
+            return "/assets/cold.png"
+        }
+    }
+
+    function getType(time, type) {
+        
+        switch (type) {
+            case "Clear":
+                if (5 < time < 19) {
+                    return "/assets/sun.png";
+                } else {
+                    return "/assets/night.png"
+                }
+            case "Clouds":
+                return "/assets/cloud.png";
+            case "Rain":
+                return "/assets/heavy-rain.png";
+        }
+    }
+
+</script>

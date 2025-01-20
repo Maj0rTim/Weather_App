@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Search";
+}
+
+<div class="container-fluid p-5">
+
+</div>
+<div class="container-fluid">
+    <div class="row justify-content-center align-content-center">
+        <div class="col-4">
+            <input id="search-input" class="form-control" type="text" placeholder="City" value="" />
+        </div>
+        <div class="col-1">
+            <input id="Search-btn" class="btn btn-primary" type="button" value="Search" />
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <form  id="Search-form" asp-controller="Database" asp-action="Send" method="get">
+        <input hidden id="name" type="text" name="name" value="" />
+        <input hidden id="type" type="text" name="type" value="" />
+        <input hidden id="temp" type="text" name="temp" value="" />
+        <input hidden id="max" type="text" name="max" value="" />
+        <input hidden id="min" type="text" name="min" value="" />
+        <input hidden id="speed" type="text" name="speed" value="" />
+        <input hidden id="Search-submit" type="submit"/>
+    </form>
+</div>
+
+<style>
+    
+</style>
+
+<script>
+
+    //===================================================================
+    //
+    //  Ajax Get method to retireve Weather data using Open Weather API
+    //
+    //===================================================================
+    $("#Search-btn").click(function () {
+
+        var city = $("#search-input").val();
+        $.get("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&&APPID=37e63eaf93cf60fb81df4c77d349271b", function (data, status) {
+            console.log(status);
+            getValues(data);
+        }).fail(function () {
+            alert("City Not Found!!!")
+        });
+    });
+
+    function getValues(data) {
+        $("#name").val(data.name);
+        $("#type").val(data.weather[0].main);
+        $("#temp").val(parseInt(data.main.temp));
+        $("#max").val(parseInt(data.main.temp_max));
+        $("#min").val(parseInt(data.main.temp_min));
+        $("#speed").val(parseInt(data.wind.speed));
+        $("#Search-form").submit();
+    }
+
+</script>
+

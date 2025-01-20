@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather_App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <img id="background-image" src="/assets/Background.jpeg" />
+    <header class="header border-bottom mb-5">
+        <div class="container-fluid">
+            <div class="p-3">
+                <div class="row justify-content-start">
+                    <div class="col-2 align-content-center border-end">
+                        <p class="m-auto">Weather App - @ViewData["Title"]</p>
+                    </div>
+                    <div class="col-1">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Search</a>
+                    </div>
+                    <div class="col-1">
+                        <a class="nav-link" asp-controller="Database" asp-action="Index">History</a>
+                    </div>
+                    <div class="col-1">
+                        <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <style>
+        #background-image {
+            position: absolute;
+            z-index: -1;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <div class="container">
+        <div class="">
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

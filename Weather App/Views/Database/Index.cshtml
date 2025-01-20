@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Weather_App.Models.City>
+
+@{
+    ViewData["Title"] = "History";
+}
+<div class="container-fluid">
+    <div class="mb-5 pt-2">
+        <form class="" asp-controller="Database" asp-action="Index" method="get">
+            <div class="row justify-content-center align-content-center">
+                <div class="col-4">
+                    <input id="search-input" class="form-control" type="text" name="searchString" placeholder="City" value="" />
+                </div>
+                <div class="col-1">
+                    <input id="search-btn" class="btn btn-primary" type="submit" value="Filter" />
+                </div>
+                <div class="col-1">
+                    <a id="search-btn" class="btn btn-primary" asp-controller="Database" asp-action="Index">Reset</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-2 p-3">
+                <a class="card" asp-controller="Database" asp-action="Forecast" asp-route-id="@item.Id">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                        <p class="card-text">Entries: @Html.DisplayFor(modelItem => item.Entries)</p>
+                        
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .card {
+        text-decoration: none;
+        color: black;
+    }
+
+    #search-btn {
+        width: 100%;
+    }
+</style>
